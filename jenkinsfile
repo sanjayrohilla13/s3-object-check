@@ -32,7 +32,7 @@ pipeline {
                         aws s3api head-object --bucket sanjayrohilla --key terraform/tfstate.tfstate
                         if [ $? ] then
                         {
-                            echo "file exists"
+                            echo "file exists "
                         }
                         else
                         {
