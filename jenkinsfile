@@ -1,5 +1,4 @@
 def STAGE_TO_RUN =params.STAGE
-def BUCKETNAME = "sanjayrohilla"
 pipeline {
     agent any
     environment {
@@ -12,6 +11,7 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['dev','prod'], description: 'Select the Environment Name')
         choice(name: 'DOCKER_SRC', choices: ['ECR','artifactory'], description: 'Source of Sonarqube Docker Source')
         choice(name: 'STAGE', choices: ['plan','deploy','destroy'], description: 'Terraform Stage to Apply')
+        string(name: 'BUCKETNAME', defaultValue: 'sanjayrohilla', description: 'Enter the name of S3 Bucket')
         string(name: 'KEYNAME', defaultValue: 'terraform/tfstate.tfstate', description: 'Enter the object name in the S3 Bucket')
     }
     stages {
