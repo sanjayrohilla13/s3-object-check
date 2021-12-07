@@ -29,7 +29,9 @@ pipeline {
             steps {
                 withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
                     sh '''
-                        aws s3api head-object --bucket ${BUCKET} --key ${KEYNAME} || not_exist=true
+                        echo ${BUCKETNAME}
+                        echo ${KEYNAME}
+                        aws s3api head-object --bucket ${BUCKETNAME} --key ${KEYNAME} || not_exist=true
                         if [ $not_exist ]; then
                             echo "File doesn't exist"
                         else
