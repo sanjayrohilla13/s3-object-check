@@ -27,8 +27,8 @@ pipeline {
             steps {
                 withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
                     sh (script: """
-                    bucket="sanjayrohilla"
-                    keyname="terraform/tfstate.tfstate"
+                    bucketName="sanjayrohilla"
+                    keyName="terraform/tfstate.tfstate"
                     existBool=doesObjectExist(${bucketName}, ${keyName})
                     if $existBool ; then
                         echo 'No worries, the file exists.'
