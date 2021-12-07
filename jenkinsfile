@@ -31,11 +31,13 @@ pipeline {
                     sh '''
                         echo ${BUCKETNAME}
                         echo ${KEYNAME}
-                        aws s3api head-object --bucket ${BUCKETNAME} --key ${KEYNAME} || not_exist=true
+                        aws ecr batch-get-image \
+                            --repository-name "testqube" \
+                            --image-ids imageTag="9.0-112" || not_exist=true
                         if [ $not_exist ]; then
-                            echo "File doesn't exist"
+                            echo "Image doesn't exist"
                         else
-                            echo "File exists"
+                            echo "Image exists"
                         fi
                         '''
                 }  
