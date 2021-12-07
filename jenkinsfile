@@ -33,7 +33,7 @@ pipeline {
                         echo ${KEYNAME}
                         aws ecr batch-get-image \
                             --repository-name "testqube" \
-                            --image-ids imageTag="9.0-112" || not_exist=true
+                            --image-ids imageTag="9.0-145" || not_exist=true
                         if [ $not_exist ]; then
                             echo "Image doesn't exist"
                         else
