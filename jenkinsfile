@@ -29,7 +29,7 @@ pipeline {
                     sh (script: """
                         bucket="sanjayrohilla"
                         key="terraform/tfstate.tfstate" 
-                        object_exists=$(aws s3api head-object --bucket $bucket --key $key || true)
+                        object_exists=${aws s3api head-object --bucket $bucket --key $key || true}
                             if [ -z "$object_exists" ]; then
                                 echo "it does not exist"
                             else
