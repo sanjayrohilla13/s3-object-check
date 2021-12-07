@@ -27,14 +27,7 @@ pipeline {
             steps {
                 withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
                     sh (script: """
-                        bucket="sanjayrohilla"
-                        key="terraform/tfstate.tfstate" 
-                        object_exists=${aws s3api head-object --bucket $bucket --key $key || true}
-                            if [ -z "$object_exists" ]; then
-                                echo "it does not exist"
-                            else
-                                echo "it exists "
-                        fi
+                        aws s3api wait object-exists --bucket sanjayrohilla --key terraform/tfstate.tfstate
                         """, returnStdout: true)
                 }  
             }  
