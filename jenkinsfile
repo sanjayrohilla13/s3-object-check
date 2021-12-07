@@ -1,4 +1,6 @@
 def STAGE_TO_RUN =params.STAGE
+def bucketName = "sanjayrohilla"
+def keyName = "terraform/tfstate.tfstate"
 pipeline {
     agent any
     environment {
@@ -27,9 +29,7 @@ pipeline {
             steps {
                 withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
                     sh (script: """
-                    bucketName="sanjayrohilla"
-                    keyName="terraform/tfstate.tfstate"
-                    existBool=doesObjectExist(${bucketName}, ${keyName})
+                    existBool=doesObjectExist("${bucketName}", ${keyName})
                     if $existBool ; then
                         echo 'No worries, the file exists.'
                     fi
