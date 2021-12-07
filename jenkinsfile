@@ -28,11 +28,11 @@ pipeline {
             when{expression{STAGE_TO_RUN.contains('plan')}}
             steps {
                 withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
-                    sh (script: """
+                    sh (script: '''
                         aws s3api head-object --bucket sanjayrohilla --key terraform/tfstate.tfstate
                         exists = s3DoesObjectExist(bucket:'my-bucket', path:'path/to/source/file.txt')
                         echo ${exists}
-                        """, returnStdout: true)
+                        '''
                 }  
             }  
         }
