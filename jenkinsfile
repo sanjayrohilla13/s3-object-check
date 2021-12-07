@@ -30,14 +30,11 @@ pipeline {
                 withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
                     sh (script: """
                         aws s3api head-object --bucket sanjayrohilla --key terraform/tfstate.tfstate
-                        if [ $? ] then
-                        {
-                            echo "file exists "
-                        }
+                        if [ $not_exist ]; then
+                            echo "it does not exist"
                         else
-                        {
-                            echo "file doesn't exists"
-                        }
+                            echo "it exists"
+                        fi
                         """, returnStdout: true)
                 }  
             }  
