@@ -33,7 +33,7 @@ pipeline {
                             if [ -z "$object_exists" ]; then
                                 echo "it does not exist"
                             else
-                                echo "it exists"
+                                echo "it exists "
                         fi
                         """, returnStdout: true)
                 }  
