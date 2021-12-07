@@ -1,6 +1,5 @@
 def STAGE_TO_RUN =params.STAGE
-def bucketName = "sanjayrohilla"
-def keyName = "terraform/tfstate.tfstate"
+def BUCKETNAME = "sanjayrohilla"
 pipeline {
     agent any
     environment {
@@ -13,6 +12,7 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['dev','prod'], description: 'Select the Environment Name')
         choice(name: 'DOCKER_SRC', choices: ['ECR','artifactory'], description: 'Source of Sonarqube Docker Source')
         choice(name: 'STAGE', choices: ['plan','deploy','destroy'], description: 'Terraform Stage to Apply')
+        string(name: 'KEYNAME', defaultValue: 'terraform/tfstate.tfstate', description: 'Enter the object name in the S3 Bucket')
     }
     stages {
         stage('Download GIT Hub Repo') {
@@ -29,11 +29,11 @@ pipeline {
             steps {
                 withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
                     sh '''
-                        aws s3api head-object --bucket sanjayrohilla --key terraform/tfstate.tfstate1 || not_exist=true
+                        aws s3api head-object --bucket ${BUCKET} --key ${KEYNAME} || not_exist=true
                         if [ $not_exist ]; then
-                            echo "it does not exist"
+                            echo "File doesn't exist"
                         else
-                            echo "it exists"
+                            echo "File exists"
                         fi
                         '''
                 }  
