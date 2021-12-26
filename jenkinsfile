@@ -1,6 +1,6 @@
 def STAGE_TO_RUN =params.STAGE
 pipeline {
-    agent any
+    agent { label 'AWS'}
     environment {
         AWS_DEFAULT_REGION = 'ap-southeast-2'
         //TEMP_VAR = credentials('srv-ecr-usr')
