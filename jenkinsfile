@@ -27,8 +27,8 @@ pipeline {
         stage('Plan-Base-Infra') {
             when{expression{STAGE_TO_RUN.contains('plan')}}
             steps {
-                //withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'srv-ecr-usr',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
-                withAWS(credentials: 'aws-credentials', region: 'ap-southeast-2') {
+                withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'8d0e271c-32e2-4788-87c3-131cba1c45a9',secretKeyVariable:'AWS_SECRET_ACCESS_KEY')]) {
+                //withAWS(credentials: 'aws-credentials', region: 'ap-southeast-2') {
                     sh '''
                         echo ${BUCKETNAME}
                         echo ${KEYNAME}
